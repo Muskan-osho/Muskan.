@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Valentine?</title>
+    <title>Be My Valentine? ❤️</title>
     <style>
         body {
             display: flex;
@@ -12,106 +12,101 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
-            background-color: #ffebee;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden; /* Prevents scrollbars when button moves */
+            background-color: #fff0f3;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            overflow: hidden;
         }
 
         .container {
             text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
-        .suit-image {
-            width: 250px;
-            height: 300px;
-            background-color: #333; /* Dark suit color */
-            margin: 0 auto 20px;
-            border-radius: 10px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            position: relative;
-            /* Placeholder styling to represent a suit */
-            background: linear-gradient(to bottom, #1a1a1a 80%, #2c3e50 100%);
-            border: 4px solid #fff;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        /* Simple CSS Suit Tie and Collar effect */
-        .suit-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 50px solid transparent;
-            border-right: 50px solid transparent;
-            border-top: 60px solid white; /* Shirt collar */
+        /* Using your provided image link */
+        .suit-img {
+            width: 280px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         h1 {
-            color: #d32f2f;
-            font-size: 2.5rem;
-            margin-top: 20px;
+            color: #ff4d6d;
+            font-size: 2rem;
+            margin-bottom: 30px;
         }
 
-        .btn-group {
-            margin-top: 30px;
-            position: relative;
-            height: 60px;
-            width: 100%;
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
         }
 
         button {
-            padding: 15px 40px;
+            padding: 15px 35px;
             font-size: 1.2rem;
             font-weight: bold;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             cursor: pointer;
-            position: absolute;
+            transition: 0.2s;
         }
 
         #yesBtn {
-            background-color: #4caf50;
+            background-color: #ff4d6d;
             color: white;
-            left: 50%;
-            transform: translateX(-120%);
         }
 
         #noBtn {
-            background-color: #f44336;
+            background-color: #594d4d;
             color: white;
-            left: 50%;
-            transform: translateX(20%);
-            transition: 0.1s; /* Makes the jump look faster */
+            position: absolute; /* Needed for the jumping effect */
+        }
+
+        /* Success screen styling */
+        .success-message {
+            display: none;
+            font-size: 3rem;
+            color: #ff4d6d;
+            animation: heartBeat 1.2s infinite;
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="suit-image">
-             <div style="color: white; margin-bottom: 10px;">https://i.pinimg.com/736x/64/52/04/6452046c12ab5e53931b655f2cd1c269.jpg</div>
-        </div>
-
+    <div id="mainContent" class="container">
+        <img src="https://i.pinimg.com/736x/64/52/04/6452046c12ab5e53931b655f2cd1c269.jpg" alt="Suit" class="suit-img">
+        
         <h1>Will you be my Valentine? ❤️</h1>
 
-        <div class="btn-group">
+        <div class="buttons">
             <button id="yesBtn" onclick="celebrate()">YES!</button>
-            <button id="noBtn" onmouseover="moveButton()">No</button>
+            <button id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
         </div>
     </div>
 
+    <div id="success" class="success-message">
+        I KNEW IT! ❤️🌹<br>
+        <span style="font-size: 1.5rem; color: #333;">I love you!</span>
+    </div>
+
     <script>
-        function moveButton() {
+        function moveNoButton() {
             const noBtn = document.getElementById('noBtn');
             
-            // Randomly move the button anywhere on the screen
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            // Generate random positions (avoiding edges so it stays visible but unreachable)
+            const padding = 100;
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding) + padding/2;
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding) + padding/2;
             
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
@@ -119,14 +114,5 @@
         }
 
         function celebrate() {
-            document.body.innerHTML = `
-                <div style="text-align:center; padding-top: 100px;">
-                    <h1 style="font-size: 4rem;">YES! 🥂🌹</h1>
-                    <p style="font-size: 1.5rem; color: #d32f2f;">I love you! Can't wait for our date!</p>
-                </div>
-            `;
-            document.body.style.backgroundColor = "#ffcdd2";
-        }
-    </script>
-</body>
-</html>
+            document.getElementById('mainContent').style.display = 'none';
+            document.
