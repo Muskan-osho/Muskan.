@@ -13,65 +13,70 @@
             height: 100vh;
             margin: 0;
             background-color: #fff0f3;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Keeps the button from creating scrollbars */
         }
 
         .container {
             text-align: center;
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 1;
         }
 
-        /* Using your provided image link */
         .suit-img {
             width: 280px;
             border-radius: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
         }
 
         h1 {
             color: #ff4d6d;
-            font-size: 2rem;
-            margin-bottom: 30px;
+            font-size: 2.2rem;
+            margin: 20px 0;
         }
 
-        .buttons {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
+        /* Fixed container for the Yes button so it never moves */
+        .yes-wrapper {
+            margin-top: 20px;
         }
 
         button {
-            padding: 15px 35px;
-            font-size: 1.2rem;
+            padding: 15px 40px;
+            font-size: 1.3rem;
             font-weight: bold;
             border: none;
-            border-radius: 12px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         #yesBtn {
-            background-color: #ff4d6d;
+            background-color: #4caf50;
             color: white;
+            transition: transform 0.2s;
         }
 
+        #yesBtn:hover {
+            transform: scale(1.1);
+        }
+
+        /* The No button starts here but will jump anywhere */
         #noBtn {
             background-color: #594d4d;
             color: white;
-            position: absolute; /* Needed for the jumping effect */
+            position: absolute;
+            top: 75%; /* Initial position */
+            left: 55%;
         }
 
-        /* Success screen styling */
-        .success-message {
+        .success-screen {
             display: none;
-            font-size: 3rem;
-            color: #ff4d6d;
-            animation: heartBeat 1.2s infinite;
+            text-align: center;
+        }
+
+        .success-screen h1 {
+            font-size: 4rem;
+            animation: heartBeat 1s infinite;
         }
 
         @keyframes heartBeat {
@@ -83,36 +88,41 @@
 </head>
 <body>
 
-    <div id="mainContent" class="container">
+    <div id="game-ui" class="container">
         <img src="https://i.pinimg.com/736x/64/52/04/6452046c12ab5e53931b655f2cd1c269.jpg" alt="Suit" class="suit-img">
         
         <h1>Will you be my Valentine? ❤️</h1>
 
-        <div class="buttons">
+        <div class="yes-wrapper">
             <button id="yesBtn" onclick="celebrate()">YES!</button>
-            <button id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
         </div>
+
+        <button id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
     </div>
 
-    <div id="success" class="success-message">
-        I KNEW IT! ❤️🌹<br>
-        <span style="font-size: 1.5rem; color: #333;">I love you!</span>
+    <div id="success" class="success-screen">
+        <h1>I KNEW IT! ❤️🌹</h1>
+        <p style="font-size: 1.5rem;">Happy Valentine's Day, Hubby!</p>
     </div>
 
     <script>
         function moveNoButton() {
             const noBtn = document.getElementById('noBtn');
             
-            // Generate random positions (avoiding edges so it stays visible but unreachable)
-            const padding = 100;
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding) + padding/2;
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding) + padding/2;
+            // This ensures the button moves anywhere on the screen (top, bottom, sides)
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             
-            noBtn.style.position = 'fixed';
+            noBtn.style.position = 'fixed'; // Breaks it out of the layout
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
         }
 
         function celebrate() {
-            document.getElementById('mainContent').style.display = 'none';
-            document.
+            document.getElementById('game-ui').style.display = 'none';
+            document.getElementById('success').style.display = 'block';
+            document.body.style.backgroundColor = "#ffccd5";
+        }
+    </script>
+</body>
+</html>
